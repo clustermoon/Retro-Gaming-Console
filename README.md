@@ -1,20 +1,11 @@
 # Retro-Gaming-Console
 Class Assignment.
 
-
 Watchlist App
-Repository Link: https://github.com/clustermoon/movie-watchlist
+Repository Link: https://github.com/clustermoon/Retro-Gaming-Console
 
-Movie Properties:
-Each movie is an object with three properties: title (string), genre(string from drop down options), and watched (boolean).
-All Movies are kept in the watchlist.
+How this program works:
+This program calls upon an API when the button is clicked, the code creates an 'XMLHttpRequest' object. This object then calls 'open("GET", url)' to start our signal connection to the API. Calling 'send()' fires the request, and the state change handler runs and once it reaches a 'readyState' of 4 we check for a status code of 200 (OK). With that we can parse the response text from a JSON object into a javascript object using the PARSE method and sending the consoles array of objects on to be rendered.
 
-Method:
-The watchlist object has a 'toggleWatched' method that flips the watched boolean of that movie at that index within the movie array. 
-The mark watched / unwatched button calls this method along with a re-render so the status updates.
-
-
-Savind and Loading:
-The method 'SaveMovies' converts the movies array to a string and using JSON stringify we store it in localstorage.
-The method 'LoadMovies' takes the saved data within the localstorage and constructs movie objects out of the stringified data. 
-The loading is wrapped in a try catch in case the data we attempt to deserialize is bad. 
+How the summary is created:
+As each console is rendered, it's data object is pushed into an array named 'summary_list', so the list's length is the total number of consoles retrieved. Our 'update_summary' method then loops through the list once, comparing each item's year against the oldest and newest years seen so far and selects the maximal oldest and youngest items within the list. Then we concat a summary string using the two objects properties to compose a summary of oldest console -> newest console. 
