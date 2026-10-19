@@ -47,6 +47,35 @@ header {
     align-items: center;
 }
 
+#load_consoles {
+    padding: 0.75em 1.75em;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    background: linear-gradient(135deg, #7b3fe4, #121985);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px; /* pill shape */
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+#load_consoles:hover {
+    box-shadow: 0 8px 20px rgba(120, 60, 200, 0.5);
+}
+
+#load_consoles:active {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+#load_consoles:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+}
+
 #summary{
     text-align: center;
 }
