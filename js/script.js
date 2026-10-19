@@ -2,25 +2,21 @@
 const consoles_button = document.getElementById("load_consoles");
 const section_display = document.getElementById("section_display");
 const output = document.getElementById("error_message"); 
+const summary = document.getElementById("summary");
+
+let summary_list = [];
 
 // Event listener on the button directly calls the following logic block on click
 consoles_button.addEventListener("click", function () {
     output.textContent = "";
+    summary_list = [];
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "https://ozarktechwebdev.com/api/consoles.json");
 
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                try {
-                    const data = JSON.parse(xhr.responseText);
-                    renderConsoles(data.consoles);
-                } catch (err) {
-                    output.textContent = "Could not parse the response.";
-                }
-            } else {
-                output.textContent = "Request failed: " + xhr.status;
-            }
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+            renderConsoles(data.consoles);
         }
     };
     xhr.send();
@@ -57,5 +53,35 @@ function renderConsoles(consoles){
         details.append(manufacturer, separator, year);
         console_card.append(img, title, details);
         section_display.appendChild(console_card);
+        summary_list.push(item);
     });
+    update_summary();
+}
+
+function update_summary(){
+    if (summary_list.length === 0) {
+        summary.textContent = "";
+        return;
+    }
+
+    let newest_entry = null;
+    let newest_year  = 0;
+    let oldest_year = 100000;
+    let oldest_entry = null
+
+    summary_list.forEach(function (item) {
+        if (item.year > newest_year) {
+            newest_entry = item;
+            newest_year = item.year;
+        }
+        if (item.year < oldest_year) {
+            oldest_entry = item;
+            oldest_year = item.year;
+        }
+    });
+
+    summary.textContent =
+        summary_list.length + " consoles . Oldest: " + oldest_entry.name +
+        " (" + oldest_entry.year + ") . Newest: " + newest_entry.name +
+        " (" + newest_entry.year + ")";
 }

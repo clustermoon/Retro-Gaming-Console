@@ -40,3 +40,28 @@ header {
     margin: 1em 20%;
     padding: 1em;
 }
+
+#button_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#summary{
+    text-align: center;
+}
+
+.console_card{
+    margin: 1em;
+    padding: 0.5em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(127, 255, 212, 0.062);
+    border-radius: 25px;
+}
+
+.console_img{
+    max-width: 50%;
+}
