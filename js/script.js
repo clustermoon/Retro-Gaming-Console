@@ -8,16 +8,32 @@ let summary_list = [];
 
 // Event listener on the button directly calls the following logic block on click
 consoles_button.addEventListener("click", function () {
-    output.textContent = "";
+    output.textContent = "Loading...";
     summary_list = [];
+    summary.textContent = "";
+    section_display.innerHTML = "";
+
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "https://ozarktechwebdev.com/api/consoles.json");
 
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText);
-            renderConsoles(data.consoles);
+        if(xhr.readyState !== 4) return;
+
+        if(xhr.status !== 200){
+            output.textContent = "Request failed. Status Code: " + xhr.status;
+            return;
         }
+
+        let data;
+        try{
+            data = JSON.parse(xhr.responseText);
+        } catch (err) {
+            output.textContent = "Could no parse the response.";
+            return;
+        }
+
+        output.textContent = "";
+        renderConsoles(data.consoles);
     };
     xhr.send();
 });
